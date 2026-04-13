@@ -12,6 +12,7 @@ class Dashboard extends BaseController
         if ($session->get('id_rol') != 745) {
             return redirect()->to('/salir'); 
         }
+        
 
         $data = [
             'titulo' => 'Panel de Administración',
