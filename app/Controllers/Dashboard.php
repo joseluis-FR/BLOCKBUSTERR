@@ -1,90 +1,68 @@
-<?php
+<?= $this->extend('layouts/admin_layout') ?>
 
-namespace App\Controllers;
+<?= $this->section('content') ?>
 
-class Dashboard extends BaseController
-{
-    // 1. Panel para el Administrador (Rol 745)
-    public function admin()
-    {
-        $session = session();
-        // Doble validación de seguridad por Rol
-        if ($session->get('id_rol') != 745) {
-            return redirect()->to('/salir'); 
-        }
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0 text-primary fw-bold">Formulario de Registro</h5>
+    </div>
+    <div class="card-body">
+        <form action="<?= base_url('/admin/usuarios/guardar') ?>" method="POST">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Nombre(s)</label>
+                    <input type="text" name="nombre" class="form-control" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Apellido Paterno</label>
+                    <input type="text" name="ap_paterno" class="form-control" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Apellido Materno</label>
+                    <input type="text" name="ap_materno" class="form-control">
+                </div>
 
-        // Conectamos a la base de datos para contar los registros
-        $db = \Config\Database::connect();
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Correo Electrónico</label>
+                    <input type="email" name="email" class="form-control" placeholder="ejemplo@blockbuster.com" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Contraseña</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
 
-        $data = [
-            'titulo'          => 'Panel de Administración',
-            'nombre'          => $session->get('nombre'),
-            
-            // Contamos los registros para las tarjetas dinámicas
-            'total_peliculas' => $db->table('streaming')->countAllResults(),
-            'total_usuarios'  => $db->table('usuarios')->where('estatus_usuario', 1)->countAllResults()
-        ];
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Género (Sexo)</label>
+                    <select name="sexo" class="form-select" required>
+                        <option value="1">Masculino</option>
+                        <option value="0">Femenino</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Asignar Rol</label>
+                    <select name="id_rol" class="form-select" required>
+                        <?php foreach($roles as $r): ?>
+                            <option value="<?= $r['id_rol'] ?>"><?= $r['nombre_rol'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Asignar Plan</label>
+                    <select name="id_plan" class="form-select">
+                        <option value="">Sin plan (Solo registro)</option>
+                        <?php foreach($planes as $p): ?>
+                            <option value="<?= $p['id_plan'] ?>"><?= $p['nombre_plan'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
 
-        // Cargamos la vista que modificaste hace un momento
-        return view('admin/inicio', $data);
-    }
+            <div class="text-end mt-4">
+                <a href="<?= base_url('/admin/usuarios') ?>" class="btn btn-secondary me-2">Cancelar</a>
+                <button type="submit" class="btn btn-primary px-4 fw-bold">Crear Usuario</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-    // 2. Panel para el Operador (Rol 125)
-    public function operador()
-    {
-        $session = session();
-        if ($session->get('id_rol') != 125) {
-            return redirect()->to('/salir');
-        }
-
-        $data = [
-            'titulo' => 'Panel de Operador',
-            'nombre' => $session->get('nombre')
-        ];
-
-        return view('operador/inicio', $data);
-    }
-
-    // 3. Panel para el Cliente (Rol 58)
-    public function cliente()
-{
-    $session = session();
-    if ($session->get('id_rol') != 58) {
-        return redirect()->to('/salir');
-    }
-
-    // Instanciamos el modelo de Streaming para traer las películas
-    $streamingModel = new \App\Models\StreamingModel();
-
-    $data = [
-        'titulo'    => 'Catálogo de Estrenos',
-        'nombre'    => $session->get('nombre'),
-        'peliculas' => $streamingModel->findAll() // Trae todo el catálogo
-    ];
-
-    //dd($streamingModel->first());
-
-    return view('cliente/inicio', $data);
-}
-
-public function mis_alquileres()
-{
-    $session = session();
-    $id_usuario = $session->get('id_usuario');
-
-    // Usamos el Query Builder para unir las tablas
-    $db = \Config\Database::connect();
-    $builder = $db->table('alquileres a');
-    $builder->select('a.*, s.nombre_streaming, s.caratula_streaming');
-    $builder->join('streaming s', 'a.id_streaming = s.id_streaming');
-    $builder->where('a.id_usuario', $id_usuario);
-    $query = $builder->get();
-
-    $data = [
-        'titulo' => 'Mis Alquileres',
-        'alquileres' => $query->getResultArray()
-    ];
-
-    return view('cliente/mis_alquileres', $data);
-}
-}
+<?= $this->endSection() ?>
