@@ -2,6 +2,11 @@
 
 <?= $this->section('content') ?>
 
+<div class="d-flex justify-content-end mb-4">
+    <a href="<?= base_url('/admin/usuarios/crear') ?>" class="btn btn-warning fw-bold shadow-sm">
+        <i class="bi bi-person-plus-fill me-2"></i> Nuevo Usuario
+    </a>
+</div>
 <div class="card shadow-sm border-0">
     <div class="card-body">
         <div class="table-responsive">
