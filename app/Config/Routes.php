@@ -38,3 +38,6 @@ $routes->get('/admin/planes/eliminar/(:num)', 'Planes::eliminar/$1');
 
 $routes->get('/admin/usuarios', 'Usuarios::index');
 $routes->post('/admin/usuarios/cambiar_rol/(:num)', 'Usuarios::cambiar_rol/$1');
+$routes->post('/admin/usuarios/guardar', 'Usuarios::guardar');
+$routes->get('/admin/usuarios/editar/(:num)', 'Usuarios::editar/$1');
+$routes->post('admin/usuarios/actualizar/(:num)', 'Usuarios::actualizar/$1');
