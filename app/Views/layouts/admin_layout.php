@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
-        body { background-color: #f8f9fa; color: #333; }
+        body { background-color: #0e83f7b2; color: #333; }
         .sidebar { min-height: 100vh; background: #212529; color: white; }
         .sidebar a { color: #adb5bd; text-decoration: none; padding: 10px 20px; display: block; }
         .sidebar a:hover, .sidebar a.active { background: #343a40; color: #ffc107; }
