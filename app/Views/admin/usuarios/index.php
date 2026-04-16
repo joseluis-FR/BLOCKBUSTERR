@@ -37,7 +37,9 @@
                                     <option value="125" <?= ($u['id_rol'] == 125) ? 'selected' : '' ?>>Operador</option>
                                     <option value="745" <?= ($u['id_rol'] == 745) ? 'selected' : '' ?>>Admin</option>
                                 </select>
-                                <button type="submit" class="btn btn-sm btn-dark">Actualizar</button>
+                               <button type="submit" class="btn btn-sm btn-dark" onclick="return confirm('¿Seguro que quieres cambiar el permiso de este usuario?')">
+    Actualizar
+</button>
                             </form>
                         </td>
                     </tr>
