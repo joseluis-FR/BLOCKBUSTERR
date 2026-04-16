@@ -70,5 +70,19 @@ public function guardar()
     } else {
         return redirect()->back()->with('error', 'Error al crear el usuario.');
     }
+
+}
+
+public function eliminar($id)
+{
+    $model = new \App\Models\UsuariosModel();
+    
+    // Verificamos si el usuario existe antes de intentar borrar
+    if ($model->find($id)) {
+        $model->delete($id);
+        return redirect()->to('/admin/usuarios')->with('success', 'Usuario eliminado correctamente.');
+    }
+
+    return redirect()->to('/admin/usuarios')->with('error', 'No se encontró el usuario.');
 }
 }

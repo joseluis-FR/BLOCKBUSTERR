@@ -7,6 +7,7 @@
         <i class="bi bi-person-plus-fill me-2"></i> Nuevo Usuario
     </a>
 </div>
+
 <div class="card shadow-sm border-0">
     <div class="card-body">
         <div class="table-responsive">
@@ -17,8 +18,7 @@
                         <th>Correo</th>
                         <th>Rol Actual</th>
                         <th>Plan</th>
-                        <th class="text-end">Cambiar Rol</th>
-                    </tr>
+                        <th class="text-end">Acciones</th> </tr>
                 </thead>
                 <tbody>
                     <?php foreach($usuarios as $u): ?>
@@ -35,17 +35,26 @@
                             <span class="badge <?= $clase ?>"><?= $u['nombre_rol'] ?></span>
                         </td>
                         <td><?= $u['nombre_plan'] ?? '<span class="text-muted">Sin plan</span>' ?></td>
+                        
                         <td class="text-end">
-                            <form action="<?= base_url('/admin/usuarios/cambiar_rol/'.$u['id_usuario']) ?>" method="POST" class="d-inline-flex">
-                                <select name="id_rol" class="form-select form-select-sm me-2" style="width: auto;">
-                                    <option value="58" <?= ($u['id_rol'] == 58) ? 'selected' : '' ?>>Cliente</option>
-                                    <option value="125" <?= ($u['id_rol'] == 125) ? 'selected' : '' ?>>Operador</option>
-                                    <option value="745" <?= ($u['id_rol'] == 745) ? 'selected' : '' ?>>Admin</option>
-                                </select>
-                                <button type="submit" class="btn btn-sm btn-dark">Actualizar</button>
-                            </form>
+                            <div class="d-flex justify-content-end align-items-center">
+                                <form action="<?= base_url('/admin/usuarios/cambiar_rol/'.$u['id_usuario']) ?>" method="POST" class="d-inline-flex me-2">
+                                    <select name="id_rol" class="form-select form-select-sm me-2" style="width: auto;">
+                                        <option value="58" <?= ($u['id_rol'] == 58) ? 'selected' : '' ?>>Cliente</option>
+                                        <option value="125" <?= ($u['id_rol'] == 125) ? 'selected' : '' ?>>Operador</option>
+                                        <option value="745" <?= ($u['id_rol'] == 745) ? 'selected' : '' ?>>Admin</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-dark">Actualizar</button>
+                                </form>
+
+                                <a href="<?= base_url('/admin/usuarios/eliminar/'.$u['id_usuario']) ?>" 
+                                   class="btn btn-sm btn-outline-danger" 
+                                   onclick="return confirm('¿Estás seguro de que deseas eliminar a este usuario?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
                         </td>
-                    </tr>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>

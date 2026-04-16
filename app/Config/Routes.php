@@ -41,3 +41,5 @@ $routes->post('/admin/usuarios/cambiar_rol/(:num)', 'Usuarios::cambiar_rol/$1');
 
 $routes->get('/admin/usuarios/crear', 'Usuarios::crear');
 $routes->post('/admin/usuarios/guardar', 'Usuarios::guardar');
+
+$routes->get('/admin/usuarios/eliminar/(:num)', 'Usuarios::eliminar/$1');
