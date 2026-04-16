@@ -8,7 +8,8 @@
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
                     <h5 class="card-title">Películas</h5>
-                    <p class="display-6">12</p> </div>
+                    <p class="display-6"><?= $total_peliculas ?? 0 ?></p> 
+                </div>
                 <i class="bi bi-film fs-1 opacity-50"></i>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between small">
@@ -23,12 +24,12 @@
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
                     <h5 class="card-title">Usuarios</h5>
-                    <p class="display-6">45</p>
+                    <p class="display-6"><?= $total_usuarios ?? 0 ?></p>
                 </div>
                 <i class="bi bi-people fs-1 opacity-50"></i>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between small">
-                <a class="text-white stretched-link" href="#">Gestionar Usuarios</a>
+                <a class="text-white stretched-link" href="<?= base_url('/admin/usuarios') ?>">Gestionar Usuarios</a>
                 <i class="bi bi-chevron-right"></i>
             </div>
         </div>

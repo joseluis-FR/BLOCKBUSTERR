@@ -13,12 +13,19 @@ class Dashboard extends BaseController
             return redirect()->to('/salir'); 
         }
 
+        // Conectamos a la base de datos para contar los registros
+        $db = \Config\Database::connect();
+
         $data = [
-            'titulo' => 'Panel de Administración',
-            'nombre' => $session->get('nombre')
+            'titulo'          => 'Panel de Administración',
+            'nombre'          => $session->get('nombre'),
+            
+            // Contamos los registros para las tarjetas dinámicas
+            'total_peliculas' => $db->table('streaming')->countAllResults(),
+            'total_usuarios'  => $db->table('usuarios')->where('estatus_usuario', 1)->countAllResults()
         ];
 
-        // Por ahora cargamos una vista genérica o un mensaje
+        // Cargamos la vista que modificaste hace un momento
         return view('admin/inicio', $data);
     }
 
